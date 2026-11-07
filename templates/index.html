@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+<h1>Bem-vinda ao Glamour Studio!</h1>
+
+<!--cards presentes no painel de início com a quantidade de cadatros-->
+<div class="cards">
+
+    <div class="card">
+        <h3>Clientes</h3>
+        <p class="numero">{{ total_clientes }}</p>
+        <a href="{{ url_for('clientes') }}">Ver clientes</a>
+    </div>
+
+    <div class="card">
+        <h3>Serviços</h3>
+        <p class="numero">{{ total_servicos }}</p>
+        <a href="{{ url_for('servicos') }}">Ver serviços</a>
+    </div>
+
+    <div class="card">
+        <h3>Agendamentos</h3>
+        <p class="numero">{{ total_agendamentos }}</p>
+        <a href="{{ url_for('agendamentos') }}">Ver agendamentos</a>
+    </div>
+
+</div>
+
+<h2>Próximos agendamentos</h2>
+
+{% if proximos %}
+
+<table>
+    <tr>
+        <th>Cliente</th>
+        <th>Serviço</th>
+        <th>Data</th>
+        <th>Horário</th>
+    </tr>
+
+    {% for item in proximos %}
+    <tr>
+        <td>{{ item.cliente }}</td>
+        <td>{{ item.servico }}</td>
+        <td>{{ item.data }}</td>
+        <td>{{ item.horario }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% else %}
+
+<!--mensagem para quando não há agendamentos futuros-->
+<p>Nenhum agendamento próximo.</p>
+
+{% endif %}
+
+{% endblock %}

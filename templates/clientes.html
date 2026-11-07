@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+<h1>Clientes</h1>
+
+<!--formulário para inserir os clintes no banco-->
+<div class="painel">
+
+    <h2>Cadastrar cliente</h2>
+
+    <form method="POST">
+
+        <label>Nome:</label>
+        <input type="text" name="nome" required>
+
+        <label>Telefone:</label>
+        <input type="text" name="telefone" required>
+
+        <label>E-mail:</label>
+        <input type="email" name="email">
+
+        <button type="submit">Cadastrar cliente</button>
+
+    </form>
+
+</div>
+
+<h2>Clientes cadastrados</h2>
+
+<table>
+
+    <tr>
+        <th>Nome</th>
+        <th>Telefone</th>
+        <th>E-mail</th>
+        <th>Ação</th>
+    </tr>
+
+    {% for cliente in clientes %}
+    <tr>
+        <td>{{ cliente.nome }}</td>
+        <td>{{ cliente.telefone }}</td>
+        <td>{{ cliente.email }}</td>
+
+        <td>
+            <!--vai enviar uma solicitação POST para excluir o cliente selecionado-->
+            <form method="POST"
+                  action="{{ url_for('excluir_cliente', id=cliente.id) }}"
+                  onsubmit="return confirm('Deseja excluir este cliente?')">
+
+                <button class="botao-excluir" type="submit">
+                    Excluir
+                </button>
+
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock %}

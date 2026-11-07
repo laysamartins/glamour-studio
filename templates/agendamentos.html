@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+<h1>Agendamentos</h1>
+
+<div class="painel">
+
+    <h2>Novo agendamento</h2>
+
+    {% if clientes and servicos %}
+
+    <form method="POST">
+
+        <label>Cliente:</label>
+
+        <select name="cliente_id" required>
+            <option value="">Selecione um cliente</option>
+    
+            <!-- vai preencher as opções com os clientes cadastrados -->
+            {% for cliente in clientes %}
+            <option value="{{ cliente.id }}">
+                {{ cliente.nome }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label>Serviço:</label>
+
+        <!--vai preencher as opções com os serviços cadastrados-->
+        <select name="servico_id" required>
+            <option value="">Selecione um serviço</option>
+
+            {% for servico in servicos %}
+            <option value="{{ servico.id }}">
+                {{ servico.nome }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label>Data:</label>
+        <input type="date" name="data" id="data_agendamento" required>
+
+        <label>Horário:</label>
+        <input type="time" name="horario" required>
+
+        <button type="submit">Agendar horário</button>
+
+    </form>
+
+    {% else %}
+
+    <!--orientação caso não tenha cliente ou serviço cadastradi ainda-->
+    <p>
+        Para realizar um agendamento, primeiro cadastre
+        pelo menos um cliente e um serviço.
+    </p>
+
+    {% endif %}
+
+</div>
+
+<!--horarios já registrados-->
+<h2>Horários agendados</h2>
+
+<table>
+
+    <tr>
+        <th>Cliente</th>
+        <th>Serviço</th>
+        <th>Data</th>
+        <th>Horário</th>
+        <th>Ação</th>
+    </tr>
+
+    <!--agendamnetos retornados pela busca no banco-->
+    {% for agendamento in agendamentos %}
+
+    <tr>
+        <td>{{ agendamento.cliente }}</td>
+        <td>{{ agendamento.servico }}</td>
+        <td>{{ agendamento.data }}</td>
+        <td>{{ agendamento.horario }}</td>
+
+        <td>
+            <!--solicitação de cancelamento de agendamneto escolhido-->
+            <form method="POST"
+                  action="{{ url_for('cancelar_agendamento', id=agendamento.id) }}"
+                  onsubmit="return confirm('Deseja cancelar este agendamento?')">
+
+                <button class="botao-excluir" type="submit">
+                    Cancelar
+                </button>
+
+            </form>
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}

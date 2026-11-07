@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!--título da aba-->
+    <title>Glamour | Sistema para Salão</title>
+    
+    <!--arquivo css-->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">Glamour</div>
+
+        <nav>
+            <a href="{{ url_for('inicio') }}">Início</a>
+            <a href="{{ url_for('clientes') }}">Clientes</a>
+            <a href="{{ url_for('servicos') }}">Serviços</a>
+            <a href="{{ url_for('agendamentos') }}">Agendamentos</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+        <!--mensagens temporárias pelas rotas do flask-->
+        {% with mensagens = get_flashed_messages() %}
+            {% if mensagens %}
+                {% for mensagem in mensagens %}
+                    <div class="mensagem">{{ mensagem }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block conteudo %}
+        {% endblock %}
+
+    </main>
+
+    <!--padrão para todos os rodapé-->
+    <footer>
+        <p>Glamour © 2026 - Sistema de gerenciamento de salão</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

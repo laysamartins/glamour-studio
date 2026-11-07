@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+<h1>Serviços</h1>
+
+<div class="painel">
+
+    <!--formulário de cadastro de serviços-->
+    <h2>Cadastrar serviço</h2>
+
+    <form method="POST">
+
+        <label>Nome do serviço:</label>
+        <input type="text" name="nome" required>
+
+        <label>Preço (R$):</label>
+        <input type="number" name="preco"
+               step="0.01" min="0" required>
+
+        <label>Duração (minutos):</label>
+        <input type="number" name="duracao"
+               min="1" required>
+
+        <button type="submit">Cadastrar serviço</button>
+
+    </form>
+
+</div>
+
+<!--tabela com serviços registrados-->
+<h2>Serviços cadastrados</h2>
+
+<table>
+
+    <tr>
+        <th>Serviço</th>
+        <th>Preço</th>
+        <th>Duração</th>
+    </tr>
+
+    <!--formata o preço com duas casas decimais-->
+    {% for servico in servicos %}
+    <tr>
+        <td>{{ servico.nome }}</td>
+        <td>R$ {{ "%.2f"|format(servico.preco) }}</td>
+        <td>{{ servico.duracao }} minutos</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock %}
